@@ -1,0 +1,17 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  display: block;
+}
+.titleImg{
+  font-size: 100px;
+  color: white;
+  font-family: vollkorn;
+  text-align: center;
+}
+.levelsButton{
+  width:180px;
+  height:50px;
+}
