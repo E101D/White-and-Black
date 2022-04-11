@@ -10,6 +10,8 @@ class Game {
     start(){
         form = new Form();
         form.display();
+
+        console.log(gameState);
         
         this.handleLevelsButton();
         
@@ -18,7 +20,7 @@ class Game {
          obstacleBlackPositions = [
             { x: width / 2 - 150, y: height / 2 - 100},
             { x: width / 2 + 250, y: height / 3 - 100},
-            { x: width / 2 - 180, y: height / 2 - 300},
+            { x: width / 2 + 250, y: height / 2 - 300},
            
             { x: width / 2 - 150, y: height / 2 + 200},
             { x: width / 2, y: height / 2 + 300},
@@ -26,18 +28,38 @@ class Game {
           obstacleWhitePositions = [
            
             { x: width / 2 - 180, y: height / 2 - 300},
-           
+
             { x: width / 2 + 150, y: height / 2 - 200},
             { x: width / 2, y: height / 2 + 300},
             { x: width / 2 - 150, y: height / 2 - 100},
             { x: width / 2 + 250, y: height / 3 - 100}
           ];
         this.handleLevel1();
-    }
+        this.handleLevel2();
+        this.handleLevel3();
+        this.handleLevel4();
+        this.handleLevel5();
+        }
     
     play(){
         background("grey");
         drawSprites();
+
+        this.handlePlayerControls();
+        
+        if(white.isTouching(platform)){
+            white.velocityY = 0;
+        }
+        if(black.isTouching(platform2)){
+            black.velocityY = 0;
+        }
+
+        if(white.isTouching(obstaclewhite)&& white.position.y > obstaclewhite.y){
+            white.velocityY = 0;
+        }
+        if(black.isTouching(obstacleblack)&& black.position.y > obstacleblack.y){
+            black.velocityY = 0;
+        }
     }
     handlePlayButton(){
         form.playButton.mousePressed(() => {
@@ -97,16 +119,40 @@ class Game {
         })
     }
     handleLevel2(){
-        
+        this.level2.mousePressed(()=>{
+            this.hide();
+            this.addSprites(obstacleblack, 3, "black", obstacleBlackPositions)
+            this.addSprites(obstaclewhite, 2, "white", obstacleWhitePositions)
+
+            gameState = "play";
+        })
     }
     handleLevel3(){
+        this.level3.mousePressed(()=>{
+            this.hide();
+            this.addSprites(obstacleblack, 2, "black", obstacleBlackPositions)
+            this.addSprites(obstaclewhite, 4, "white", obstacleWhitePositions)
 
+            gameState = "play";
+        })
     }
     handleLevel4(){
-        
+        this.level4.mousePressed(()=>{
+            this.hide();
+            this.addSprites(obstacleblack, 5, "black", obstacleBlackPositions)
+            this.addSprites(obstaclewhite, 3, "white", obstacleWhitePositions)
+
+            gameState = "play";
+        })
     }
     handleLevel5(){
-        
+        this.level5.mousePressed(()=>{
+            this.hide();
+            this.addSprites(obstacleblack, 3, "black", obstacleBlackPositions)
+            this.addSprites(obstaclewhite, 6, "white", obstacleWhitePositions)
+
+            gameState = "play";
+        })
     }
 
     
@@ -114,9 +160,25 @@ class Game {
         if(keyDown(UP_ARROW)){
             white.velocityY = -3;
         }
-        
+        if(keyDown(LEFT_ARROW)){
+            white.position.x -= 3;
+        }
+        if(keyDown(RIGHT_ARROW)){
+            white.position.x += 3;
+        }
 
-        white.velocityY = white.velocityY + 0.5
+        if(keyDown("w")){
+            black.velocityY = -3;
+        }
+        if(keyDown("a")){
+            black.position.x -= 3;
+        }
+        if(keyDown("d")){
+            black.position.x += 3;
+        }
+
+        white.velocityY = white.velocityY + 0.5;
+        black.velocityY = black.velocityY + 0.5; 
     }
     
 }
